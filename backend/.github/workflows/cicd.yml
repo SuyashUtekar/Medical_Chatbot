@@ -1,0 +1,27 @@
+name: Deploy Node application
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: docker build -t pranav294/medical-chatbot-backend .
+      - name: Publish Image to docker hub
+        run: docker push pranav294/medical-chatbot-backend:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull pranav294/medical-chatbot-backend:latest
+      - name: Run Docker Container
+        run: docker run -d -p 4000:4000 --name backend-app-container -e MONGODB_URL=${{secrets.MONGODB_URL}} -e JWT_SECRET=${{secrets.JWT_SECRET}} -e PORT=${{secrets.PORT}} -e COOKIE_SECRET=${{secrets.COOKIE_SECRET}} pranav294/medical-chatbot-backend:latest
