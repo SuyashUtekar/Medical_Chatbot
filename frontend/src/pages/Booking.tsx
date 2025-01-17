@@ -7,6 +7,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 interface Doctor {
   name: string;
   specialization: string;
+  experience: string;
   location: string;
   profileLink: string;
 }
@@ -170,6 +171,9 @@ const Booking = () => {
                 </Typography>
                 <Typography variant="body1">
                   <strong>Specialization:</strong> {doctor.specialization}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Experience:</strong> {doctor.experience}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Location:</strong> {doctor.location}
