@@ -6,7 +6,6 @@ interface Doctor {
   name: string;
   specialization: string;
   experience: string;
-  hospital: string;
   location: string;
   profileLink: string;
 }
@@ -30,7 +29,6 @@ export const scrapeDoctors = async (
       const names = await page.$$('div > div > div > div:nth-child(4) > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(2) > a > div');
       const specializations = await page.$$('#container > div > div.c-listing-wrapper > div > div.pure-u-17-24.c-listing__left > div > div > div:nth-child(1) > div > div:nth-child(1) > div.info-section > div.u-grey_3-text > div.u-d-flex');
       const experiences = await page.$$('#container > div > div.c-listing-wrapper > div > div.pure-u-17-24.c-listing__left > div > div > div:nth-child(1) > div > div:nth-child(1) > div.info-section > div.u-grey_3-text > div.uv2-spacer--xs-top');
-      const hospitals = await page.$$('#container > div > div.c-listing-wrapper > div > div.pure-u-17-24.c-listing__left > div > div > div:nth-child(1) > div > div:nth-child(1) > div.info-section > div.uv2-spacer--sm-top > div:nth-child(3)');
       const locs = await page.$$('#container > div > div.c-listing-wrapper > div > div.pure-u-17-24.c-listing__left > div > div > div:nth-child(1) > div > div:nth-child(1) > div.info-section > div.uv2-spacer--sm-top > div.u-bold.u-d-inlineblock.u-valign--middle');
       const links = await page.$$('div > div > div > div:nth-child(4) > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(2) > a');
       const baseUrl = 'https://www.practo.com';
@@ -40,7 +38,6 @@ export const scrapeDoctors = async (
         let name = await page.evaluate(el => el.innerText, names[i]) as string;
         let specialization = await page.evaluate(el => el.innerText, specializations[i]) as string;
         let experience = await page.evaluate(el => el.innerText, experiences[i]) as string;
-        let hospital = await page.evaluate(el => el.innerText, hospitals[i]) as string;
         let location = await page.evaluate(el => el.innerText, locs[i]) as string;
         const relativeLink = await page.evaluate(el => el.getAttribute("href"), links[i]);
         const profileLink = baseUrl + relativeLink;
@@ -49,7 +46,6 @@ export const scrapeDoctors = async (
           name: name,
           specialization: specialization,
           experience: experience,
-          hospital: hospital,
           location: location,
           profileLink: profileLink,
         });
