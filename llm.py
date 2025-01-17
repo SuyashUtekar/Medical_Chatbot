@@ -8,11 +8,16 @@ def medical(text):
     old_stdout = sys.stdout
     new_stdout = io.StringIO()
     sys.stdout = new_stdout
-    client = Client("microsoft/GRIN-MoE")
+    client = Client("sujal011/llama3.2-3b-symptoms-to-disease-bot")
     sys.stdout = old_stdout
     result = client.predict(
-		message= f"""Act as Medical AI Assistant. Please be thorough and provide an informative answer. 
-     If you don't know the answer to a specific medical inquiry, advise seeking professional help. diagnosis the following input - {text}""",
+		message= f"""
+        You are a Medical AI Assistant. Based on the user's symptoms, provide a precise and informative response that includes:
+        A precise explanation of the likely disease
+        Conclude with 'Disease: [Disease Name]'
+        
+        If you don't know the answer to a specific medical inquiry, advise seeking professional help.
+        diagnosis the following input - {text}""",
 		
 		api_name="/chat"
     )
@@ -21,25 +26,3 @@ def medical(text):
 
 text = arg_from_node
 r = medical(text)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
