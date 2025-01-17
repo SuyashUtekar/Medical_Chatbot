@@ -1,6 +1,6 @@
 import sys
 import io
-from gradio_client import Client
+from gradio_client import Client # type: ignore
 # Receive arguments from Node.js
 arg_from_node = sys.argv[1]
 
